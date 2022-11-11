@@ -52,10 +52,25 @@ async function run() {
       res.send(reviews);
     });
 
+    // add service
+    app.post('/addService', async (req, res) => {
+      const service = req.body;
+      const result = await serviceCollection.insertOne(service);
+      res.send(result);
+    });
+
+
     app.post('/reviews', async (req, res) => {
       const review = req.body;
       const result = await reviewCollection.insertOne(review);
       res.send(result);
+    });
+
+    app.delete('/reviews/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await reviewCollection.deleteOne(query);
+      res.send(result)
     });
 
 
